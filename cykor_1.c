@@ -10,7 +10,7 @@
     매개 변수 / 지역 변수를 push할 경우   : int 값 그대로
     Saved Frame Pointer 를 push할 경우  : call_stack에서의     index
     반환 주소값을 push할 경우       : -1
-    =======================================================================```
+    =======================================================================
     
 
     ==========================stack_info 저장 규칙==========================
@@ -18,7 +18,7 @@
     Saved Frame Pointer 를 push할 경우  : 어떤 함수의 SFP인지
     반환 주소값을 push할 경우                 : "Return Address"
     ========================================================================
-*/  
+*/
 #include <stdio.h>
 #include <string.h>
 #define STACK_SIZE 50 // 최대 스택 크기
@@ -103,6 +103,7 @@ void epilogue(int arr_end, int where_sfp)
             FP = call_stack[SP];
         }
         call_stack[SP] = 0;
+        stack_info[SP][0] = '\0';
         SP--;
     }
     
@@ -118,6 +119,7 @@ void func1(int arg1, int arg2, int arg3)
     int arr1[3] = { arg3, arg2, arg1 };
     int count = sizeof(arr1) / sizeof(arr1[0]);
     int arr1_end;
+    int saved_fp = FP;
 
     count_parameter(arr1, count);
 
@@ -153,6 +155,7 @@ void func2(int arg1, int arg2)
     int arr2_end;
     int arr2[2] = { arg2, arg1 };
     int count = sizeof(arr2) / sizeof(arr2[0]);
+    int saved_fp = FP;
 
     count_parameter(arr2, count);
 
@@ -187,6 +190,7 @@ void func3(int arg1)
 
     int arr3[1] = { arg1 };
     int count = sizeof(arr3) / sizeof(arr3[0]);
+    int saved_fp = FP;
 
     count_parameter(arr3, count);
 
